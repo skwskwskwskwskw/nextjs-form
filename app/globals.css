@@ -2,20 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+    a {
+        @apply text-gray-300;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@layer utilities {
+    .text-bigger-hello {
+        @apply text-3xl font-semibold;
+    }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+    .primary-btn {
+        @apply w-full bg-white text-gray-800 font-medium  rounded-xl text-center hover:bg-gray-400 transition-colors;
+    }
 }
