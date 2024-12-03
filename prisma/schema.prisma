@@ -16,29 +16,36 @@ datasource db {
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique
-  password   String?
-  email      String?  @unique
+  password   String
+  email      String   @unique
   bio        String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  Tweet      Tweet[]
-  Like       Like[]
+  tweets     Tweet[]
+  likes      Like[]
 }
 
 model Tweet {
   id         Int      @id @default(autoincrement())
+  tweet      String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  Like       Like[]
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  likes  Like[]
+
+  @@index([userId])
 }
 
 model Like {
-  id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  tweet      Tweet    @relation(fields: [tweetId], references: [id])
+  tweet      Tweet    @relation(fields: [tweetId], references: [id], onDelete: Cascade)
   tweetId    Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+
+  @@unique([tweetId, userId], name: "id")
+  @@index([userId])
+  @@index([tweetId])
 }
