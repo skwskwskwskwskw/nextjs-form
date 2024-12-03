@@ -4,9 +4,9 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { typeToFlattenedError, z } from "zod";
 
-import db from "@/utils/db";
+import db from "@/lib/db";
 import { isEmailExist } from "@/service/userService";
-import { getSession } from "@/utils/session";
+import { getSession } from "@/lib/session";
 
 const logInSchema = z.object({
     email: z
@@ -75,5 +75,5 @@ export async function handleForm(
     const session = await getSession();
     session.id = user.id;
     await session.save();
-    redirect("/profile");
+    redirect("/");
 }

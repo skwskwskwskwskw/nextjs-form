@@ -1,8 +1,8 @@
-import { notFound, redirect } from "next/navigation";
-
+import { notFound } from "next/navigation";
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
-import Button from "@/components/Button";
+
+import Tweets from "./tweets/page";
 
 async function getUser() {
     const session = await getSession();
@@ -19,22 +19,15 @@ async function getUser() {
     notFound();
 }
 
-export default async function Profile() {
+export default async function Home() {
     const user = await getUser();
-    const logOut = async () => {
-        "use server";
-        const session = await getSession();
-        await session.destroy();
-        redirect("/");
-    };
+
     return (
         <main className="flex flex-col gap-20 items-center justify-center">
-            <h1 className="mt-40 text-xl font-bold">
+            <h1 className="mt-10 text-xl font-bold">
                 Welcome! {user?.username}!
             </h1>
-            <form className="w-full" action={logOut}>
-                <Button text="Log out" />
-            </form>
+            <Tweets />
         </main>
     );
 }

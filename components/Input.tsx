@@ -14,8 +14,6 @@ export default function Input({
     ...rest
 }: InputProps & InputHTMLAttributes<HTMLInputElement>) {
     const { pending } = useFormStatus();
-    console.log(errors);
-    console.log(errors ? true : false);
     return (
         <div className="flex flex-col gap-2">
             <div className="relative flex">

@@ -4,9 +4,9 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { typeToFlattenedError, z } from "zod";
 
-import db from "@/utils/db";
+import db from "@/lib/db";
 import { isEmailExist, isUsernameExist } from "@/service/userService";
-import { getSession } from "@/utils/session";
+import { getSession } from "@/lib/session";
 
 const USERNAME_MIN_LENGTH = 5;
 const PASSWORD_MIN_LENGTH = 10;

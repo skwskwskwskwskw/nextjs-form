@@ -1,6 +1,6 @@
 "use server";
 
-import db from "@/utils/db";
+import db from "@/lib/db";
 
 export const isEmailExist = async (email: string): Promise<boolean> => {
     const user = await db.user.findUnique({
