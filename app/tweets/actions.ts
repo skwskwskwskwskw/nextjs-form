@@ -16,6 +16,5 @@ export async function getMoreTweets(page: number) {
             created_at: "desc",
         },
     });
-    console.log("------", tweets);
     return tweets;
 }

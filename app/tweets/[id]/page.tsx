@@ -1,7 +1,6 @@
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { UserIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 async function getIsOwner(userId: number) {

@@ -37,7 +37,11 @@ export default function TweetsList({
     return (
         <div className="p-5 flex flex-col gap-5">
             {tweets.map((tweet) => (
-                <Link href={`/tweets/${tweet.id}`} className="flex gap-5">
+                <Link
+                    href={`/tweets/${tweet.id}`}
+                    className="flex gap-5"
+                    key={tweet.id}
+                >
                     <div className="flex flex-col gap-1 *:text-white">
                         <span className="text-lg">{tweet.tweet}</span>
                         <span className="text-sm text-neutral-500">
