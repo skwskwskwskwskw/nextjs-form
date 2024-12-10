@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
-import { Prisma } from "@prisma/client";
 
 import Tweets from "./tweets/page";
 

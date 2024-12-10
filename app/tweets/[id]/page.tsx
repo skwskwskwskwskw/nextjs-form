@@ -1,30 +1,16 @@
-import db from "@/lib/db";
+
 import { getSession } from "@/lib/session";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { notFound } from "next/navigation";
+import { getTweet } from "./actions";
+import { unstable_cache as nextCache, revalidateTag } from "next/cache";
 
-async function getIsOwner(userId: number) {
+export async function getIsOwner(userId: number) {
     const session = await getSession();
     if (session.id) {
         return session.id === userId;
     }
     return false;
-}
-
-async function getTweet(id: number) {
-    const tweet = await db.tweet.findUnique({
-        where: {
-            id,
-        },
-        include: {
-            user: {
-                select: {
-                    username: true,
-                },
-            },
-        },
-    });
-    return tweet;
 }
 
 export default async function TweetsDetail({
@@ -52,7 +38,7 @@ export default async function TweetsDetail({
                 </div>
             </div>
             <div className="p-5">
-                <h1 className="text-2xl font-semibold">{tweet.tweet}</h1>
+                <h1 className="text-2xl font-semibold">{tweet.content}</h1>
             </div>
             <div>{tweet.created_at.toString()}</div>
             <div>{tweet.updated_at.toString()}</div>

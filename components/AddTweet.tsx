@@ -1,10 +1,10 @@
 "use client";
 
 import { useActionState } from "react";
-import { handleAddTweetForm } from "@/app/actions/add-tweet-actions";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
 import Input from "./Input";
+import { handleAddTweetForm } from "@/app/tweets/actions";
 
 export default function AddTweet() {
     const [state, dispatch] = useActionState(handleAddTweetForm, null);
@@ -14,11 +14,11 @@ export default function AddTweet() {
             <form action={dispatch} className="w-full flex gap-5">
                 <div className="w-[500px]">
                     <Input
-                        name="tweet"
+                        name="content"
                         type="text"
                         placeholder="새 트윗 작성하기"
                         required
-                        errors={state?.error?.fieldErrors.tweet}
+                        errors={state?.error?.fieldErrors.content}
                         labelIcon={<ChatBubbleBottomCenterTextIcon />}
                     />
                 </div>

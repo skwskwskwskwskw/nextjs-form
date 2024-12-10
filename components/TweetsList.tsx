@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { InitialTweets } from "@/app/tweets/page";
-import { getMoreTweets } from "@/app/tweets/actions";
+import { useEffect, useState } from "react";
+import { getMoreTweets, InitialTweets } from "@/app/tweets/actions";
 import Link from "next/link";
 import { formatToTimeAgo } from "@/lib/utils";
 
@@ -18,19 +17,21 @@ export default function TweetsList({
     const [tweets, setTweets] = useState(InitialTweets);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
-    const [isLastPage, setIsLastPage] = useState(false);
+    const [isLastPage, setIsLastPage] = useState(InitialTweets.length >= TotalCount);
+
+    useEffect(() => {
+        if(tweets.length === TotalCount) setIsLastPage(true);
+    }, [tweets.length, TotalCount]);
 
     const onLoadMoreClick = async () => {
         setIsLoading(true);
         const newTweets = await getMoreTweets(page + 1);
-        if (newTweets.length !== 0) {
+        if (newTweets) {
             setPage((prev) => prev + 1);
             setTweets((prev) => [...prev, ...newTweets]);
             if (tweets.length + newTweets.length >= TotalCount) {
                 setIsLastPage(true);
             }
-        } else {
-            setIsLastPage(true);
         }
         setIsLoading(false);
     };
@@ -43,7 +44,7 @@ export default function TweetsList({
                     key={tweet.id}
                 >
                     <div className="flex flex-col gap-1 *:text-white">
-                        <span className="text-lg">{tweet.tweet}</span>
+                        <span className="text-lg">{tweet.content}</span>
                         <span className="text-sm text-neutral-500">
                             {formatToTimeAgo(tweet.created_at.toString())}
                         </span>
