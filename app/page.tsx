@@ -21,12 +21,13 @@ async function getUser() {
 
 export default async function Home() {
     const user = await getUser();
-
     return (
-        <main className="flex flex-col gap-20 items-center justify-center">
-            <h1 className="mt-10 text-xl font-bold">
-                Welcome! {user?.username}!
-            </h1>
+        <main className="flex flex-col gap-20 justify-center">
+            {user ? (
+                <h3 className="mt-10 text-sm font-bold ml-auto">
+                    {user?.username}
+                </h3>
+            ) : ""}
             <Tweets />
         </main>
     );
