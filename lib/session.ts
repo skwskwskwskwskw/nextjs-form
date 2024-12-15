@@ -7,3 +7,14 @@ export const getSession = async () => {
         password: process.env.COOKIE_PASSWORD!,
     });
 };
+export const destroySession = async () => {
+    const session = await getSession();
+    session.destroy();
+};
+export async function getIsOwner(userId: number) {
+    const session = await getSession();
+    if (session.id) {
+        return session.id === userId;
+    }
+    return false;
+}

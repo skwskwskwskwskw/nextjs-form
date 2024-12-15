@@ -11,7 +11,6 @@ import Link from "next/link";
 
 export default function Login() {
     const [state, dispatch] = useActionState(handleForm, null);
-    console.log(state);
 
     return (
         <main className="flex flex-col gap-10 items-center justify-center">

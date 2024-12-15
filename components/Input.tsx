@@ -15,7 +15,7 @@ export default function Input({
 }: InputProps & InputHTMLAttributes<HTMLInputElement>) {
     const { pending } = useFormStatus();
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
             <div className="relative flex">
                 <label
                     htmlFor={name}
@@ -26,7 +26,7 @@ export default function Input({
                 <input
                     id={name}
                     name={name}
-                    className={`w-full h-12 pl-11 rounded-xl bg-transparent text-stone-600 border placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-offset-2 transition ${
+                    className={`w-full h-12 pl-11 rounded-xl bg-transparent text-stone-200 border placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-offset-2 transition ${
                         errors
                             ? "border-red-500 focus:ring-red-400"
                             : "border-stone-400 focus:ring-stone-300"

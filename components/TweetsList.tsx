@@ -17,7 +17,9 @@ export default function TweetsList({
     const [tweets, setTweets] = useState(InitialTweets);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
-    const [isLastPage, setIsLastPage] = useState(InitialTweets.length >= TotalCount);
+    const [isLastPage, setIsLastPage] = useState(
+        InitialTweets.length >= TotalCount
+    );
 
     const onLoadMoreClick = async () => {
         setIsLoading(true);
@@ -39,7 +41,7 @@ export default function TweetsList({
                     className="flex gap-5"
                     key={tweet.id}
                 >
-                    <div className="flex flex-col gap-1 *:text-white">
+                    <div className="flex flex-col gap-3 *:text-white">
                         <span className="text-lg">{tweet.content}</span>
                         <span className="text-xs text-neutral-500">
                             {formatToTimeAgo(tweet.created_at.toString())}
@@ -47,11 +49,13 @@ export default function TweetsList({
                     </div>
                 </Link>
             ))}
-            {isLastPage ? "" : (
+            {isLastPage ? (
+                ""
+            ) : (
                 <button
                     onClick={onLoadMoreClick}
                     disabled={isLoading}
-                    className="text-sm font-semibold bg-blue-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
+                    className="text-sm font-semibold bg-blue-400 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
                 >
                     {isLoading ? "로딩 중" : "Load more"}
                 </button>

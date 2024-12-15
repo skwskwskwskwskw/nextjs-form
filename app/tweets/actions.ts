@@ -6,7 +6,7 @@ import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 
-const LIMIT_NUMBER = 2;
+const LIMIT_NUMBER = 5;
 export type InitialTweets = Prisma.PromiseReturnType<typeof getInitialTweets>;
 
 export async function getTotalTweets() {
@@ -54,10 +54,7 @@ export async function getMoreTweets(page: number) {
     return tweets;
 }
 
-export async function handleAddTweetForm(
-    _: unknown,
-    formData: FormData
-) {
+export async function handleAddTweetForm(_: unknown, formData: FormData) {
     const session = await getSession();
     const data = {
         content: formData.get("content"),
@@ -70,7 +67,7 @@ export async function handleAddTweetForm(
         };
     }
 
-    if(session.id) {
+    if (session.id) {
         const addNewTweet = await db.tweet.create({
             data: { content: result.data.content, userId: session.id },
         });
@@ -87,5 +84,63 @@ export async function handleAddTweetForm(
         } else {
             redirect(`/tweets/${addNewTweet.id}`);
         }
-    }  
+    }
+}
+
+export async function getTotalSearchTweets(keyword: string) {
+    return await db.tweet.count({
+        where: {
+            content: {
+                contains: keyword,
+            },
+        },
+    });
+}
+
+export async function getInitialSearchTweets(keyword: string) {
+    const tweets = await db.tweet.findMany({
+        select: {
+            id: true,
+            user: true,
+            content: true,
+            created_at: true,
+        },
+        where: {
+            content: {
+                contains: keyword,
+            },
+        },
+        take: LIMIT_NUMBER,
+        orderBy: {
+            created_at: "desc",
+        },
+    });
+    return tweets;
+}
+
+export async function getTotalUserTweets(id: number) {
+    return await db.tweet.count({
+        where: {
+            userId: id,
+        },
+    });
+}
+
+export async function getInitialUserTweets(id: number) {
+    const tweets = await db.tweet.findMany({
+        select: {
+            id: true,
+            user: true,
+            content: true,
+            created_at: true,
+        },
+        where: {
+            userId: id,
+        },
+        take: LIMIT_NUMBER,
+        orderBy: {
+            created_at: "desc",
+        },
+    });
+    return tweets;
 }
