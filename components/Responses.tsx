@@ -24,7 +24,7 @@ export default function Responses({
                 ...previousResponses,
                 {
                     id: new Date().getDate(),
-                    text: responseOptimisticValue,
+                    content: responseOptimisticValue,
                     created_at: new Date(),
                     tweetId,
                     user: { username, id: Infinity },
@@ -60,7 +60,7 @@ export default function Responses({
                     name="tweetId"
                     value={tweetId}
                 />
-                <button className="ml-auto min-w-20 bg-stone-300 rounded-xl h-12 p-3">
+                <button className="min-w-20 h-12 bg-stone-300 rounded-xl p-3">
                     추가
                 </button>
             </form>

@@ -27,18 +27,20 @@ async function getCachedResponses(tweetId: number) {
 export default async function TweetsDetail({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
-    const id = Number(params.id);
-    if (isNaN(id)) {
+    // const id = Number(params.id);
+    const { id } = await params;
+    const tweetId = Number(id);
+    if (isNaN(tweetId)) {
         return notFound();
     }
-    const tweet = await getTweet(id);
+    const tweet = await getTweet(tweetId);
     if (!tweet) {
         return notFound();
     }
-    const responses = await getCachedResponses(id);
-    const { isLiked, likeCount } = await getCachedLikeStatus(id);
+    const responses = await getCachedResponses(tweetId);
+    const { isLiked, likeCount } = await getCachedLikeStatus(tweetId);
     return (
         <div className="w-full">
             <div className="p-5 items-center gap-3 border-b border-neutral-700">
@@ -64,11 +66,11 @@ export default async function TweetsDetail({
                 <LikeButton
                     isLiked={isLiked}
                     likeCount={likeCount}
-                    tweetId={id}
+                    tweetId={tweetId}
                 />
                 <Responses
                     initialResponses={responses}
-                    tweetId={id}
+                    tweetId={tweetId}
                     username={tweet.user.username}
                 />
             </div>

@@ -15,16 +15,18 @@ import Link from "next/link";
 export default async function Users({
     params,
 }: {
-    params: { userId: string };
+    params: Promise<{ userId: string }>;
 }) {
     const user = await getUser();
-    const userId = Number(params.userId);
-    if (isNaN(userId)) {
+    // const userId = Number(params.userId);
+    const { userId } = await params;
+    const tweetUserId = Number(userId);
+    if (isNaN(tweetUserId)) {
         return notFound();
     }
-    const isOwner = await getIsOwner(userId);
-    const totalUserTweets = await getTotalUserTweets(userId);
-    const initialUserTweets = await getInitialUserTweets(userId);
+    const isOwner = await getIsOwner(tweetUserId);
+    const totalUserTweets = await getTotalUserTweets(tweetUserId);
+    const initialUserTweets = await getInitialUserTweets(tweetUserId);
     return (
         <div className="*:flex *:gap-4 *:pb-5">
             <div className="w-full items-center border-b border-neutral-700">
@@ -36,7 +38,7 @@ export default async function Users({
                 </div>
                 {isOwner ? (
                     <div className="w-[100px] ml-auto">
-                        <Link href={`${userId}/edit`}>
+                        <Link href={`${tweetUserId}/edit`}>
                             <Button text="Edit" />
                         </Link>
                     </div>
