@@ -12,7 +12,6 @@ export default function Users() {
     const [formData, setFormData] = useState<UserResponses>();
     const getUserInfo = async () => {
         const user = await getUser();
-        console.log("user", user);
         if (user) setFormData(user);
     };
     const [state, action] = useActionState(handleEditForm, null);
