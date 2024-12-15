@@ -1,5 +1,5 @@
-import { notFound, redirect } from "next/navigation";
-import { getIsOwner, getSession } from "@/lib/session";
+import { notFound } from "next/navigation";
+import { getIsOwner } from "@/lib/session";
 import Button from "@/components/Button";
 import { getUser } from "@/service/userService";
 import { UserIcon } from "@heroicons/react/24/outline";

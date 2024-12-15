@@ -8,12 +8,7 @@ import { EnvelopeIcon, KeyIcon, UserIcon } from "@heroicons/react/16/solid";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { useActionState, useEffect, useState } from "react";
 
-export default function Users({
-    params,
-}: {
-    params: Promise<{ userId: string }>;
-}) {
-    // const { userId } = use(params);
+export default function Users() {
     const [formData, setFormData] = useState<UserResponses>();
     const getUserInfo = async () => {
         const user = await getUser();
